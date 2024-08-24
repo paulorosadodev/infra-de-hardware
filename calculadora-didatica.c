@@ -3,6 +3,7 @@
  * Created on Aug, 22th 2024
  * Author: Paulo Rosado - 3ºB
  * Questão 1 - 24/08/2024 15:57
+ * Questão 2 - 24/08/2024 18:07
 
 **/
 
@@ -16,6 +17,7 @@ void toHexa(int num);
 void toOctal(int num);
 void toBinary(int num);
 void toCodeBCD(int num);
+char* complementoA2(char * binary);
 char* intToBinary(int num, int numBits);
 
 int main() {
@@ -76,6 +78,37 @@ int main() {
 
                         break;
                 }
+
+                break;
+
+            case 2:
+                system("clear");
+
+                printf("Digite o número para ser convertido em Complemento a 2 (16 bits): ");
+
+                scanf("%d", &num);
+
+                system("clear");
+
+                sleep(1);
+
+                printf("Convertendo %d em Binário de 16 bits...\n\n", num);
+
+                sleep(1);
+
+                printf("%s\n\n", intToBinary(num, 16));
+
+                sleep(1);
+
+                printf("Mantendo todos os bits até o primeiro 1 da Direita para a Esquerda...\n\n");
+
+                sleep(1);
+
+                printf("Invertendo os demais...\n\n");
+
+                sleep(1);
+
+                printf("Resultado: %s\n\n", complementoA2(intToBinary(num, 16)));
 
                 break;
 
@@ -296,6 +329,35 @@ char* intToBinary(int num, int numBits) {
     for (int i = numBits-1; i >= 0; i--) {
         binaryStr[i] = (num & 1) ? '1' : '0';
         num >>= 1;
+    }
+
+    return binaryStr;
+}
+
+char* complementoA2(char * binary) {
+    char* binaryStr = (char*)malloc(17);
+    if (!binaryStr) {
+        printf("Erro de alocação de memória.\n");
+        exit(1);
+    }
+
+    binaryStr[16] = '\0';
+
+    int pode = 0;
+
+    for (int i = 15; i >= 0; i--) {
+        if (pode) {
+            if (binary[i] == '0') {
+                binaryStr[i] = '1';
+            } else {
+                binaryStr[i] = '0';
+            }
+        } else {
+            binaryStr[i] = binary[i];
+        }
+        if (binary[i] == '1') {
+            pode = 1;
+        }
     }
 
     return binaryStr;
